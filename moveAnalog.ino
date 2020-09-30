@@ -5,10 +5,8 @@
 #define MIN_X 4000
 #define INCREMENT 500
 
-
-
 bool is_moving;
- int16_t last_value;
+int16_t last_value;
 
 void setupGamepadEmulation()
 {
@@ -17,32 +15,31 @@ void setupGamepadEmulation()
     last_value = 0;
 }
 
-bool checkMotion(VectorInt16 accel)
+bool checkMotion(int16_t accel)
 {
 
-    if (!is_moving && abs(accel.y) >= MIN_Y){
+    if (!is_moving && abs(accel) >= MIN_Y)
+    {
         //Start moving
         XInput.setJoystickY(JOY_LEFT, 2000);
-        last_value = 2000;      //default
+        last_value = 2000; //default
         is_moving = true;
     }
-    else if (is_moving && abs(accel.y >= MIN_Y)){
-            //keep moving
-        if (abs(accel.y) > last_value){
+    else if (is_moving && abs(accel >= MIN_Y))
+    {
+        //keep moving
+        if (abs(accel) > last_value)
+        {
             int16_t tmp_accel = XInput.getJoystickY(JOY_LEFT) + INCREMENT;
-            XInput.setJoystickY(JOY_LEFT, tmp_accel);     //Incrementa velocità
-            last_value = tmp_accel;     //Saves it
+            XInput.setJoystickY(JOY_LEFT, tmp_accel); //Incrementa velocità
+            last_value = tmp_accel;                   //Saves it
         }
     }
     else
     {
-        XInput.setJoystickY(JOY_LEFT, 0);       
-        is_moving = false;       //stop
+        XInput.setJoystickY(JOY_LEFT, 0);
+        is_moving = false; //stop
     }
-
-    
-    
-    
 
     // }
     // }
@@ -53,7 +50,7 @@ bool checkMotion(VectorInt16 accel)
     //     //sendButton();
     //     //Serial.println("Y Movement Detected");
     // }
-    
+
     // // if (abs(accel.x) > MIN_X)
     // // {
     // //     XInput.setJoystickX(JOY_LEFT, accel.x * 3);

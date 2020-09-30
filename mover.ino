@@ -28,21 +28,22 @@ void setup()
 void loop()
 {
 
-
   VectorInt16 movement = getRealAcceleration();
 
 #ifdef MASTER_MOVER
 
   //todo it should be another VectorInt16
-  //int16_t secondMovement = getBluetoothData();
+  int16_t secondMovementY = getBluetoothData();
+  Serial.println(secondMovementY);
 
-  checkMotion(movement);
-  
+  //checkMotion(movement);
+
   //checkMotion(secondMovement);
 #endif
 
 #ifdef SLAVE_MOVER
-  sendBluetoothData(test.x);
+
+  sendBluetoothData(movement.y);
 #endif
 
   /*STILL DEBUG STUFF*/

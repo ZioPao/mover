@@ -1,5 +1,5 @@
 {
     "sketch": "mover.ino",
-    "port": "COM6",
+    "port": "COM5",
     "board": "arduino:avr:leonardo"
 }

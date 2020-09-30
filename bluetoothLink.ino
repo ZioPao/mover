@@ -6,10 +6,13 @@ void setupBluetooth()
 
 int16_t getBluetoothData()
 {
-
+  //Reassembles the value in a 16 bit one
   if (Serial1.available() > 0)
   {
-    return Serial1.read();
+    byte a = Serial1.read();
+    byte b = Serial1.read();
+    return (int16_t)(a << 8 | b);
+    //return Serial1.read();
   }
 }
 
