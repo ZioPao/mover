@@ -2,48 +2,54 @@
 #include "helper_3dmath.h"
 #include <Wire.h>
 
+///////////////////////////////////////////////////
+/*MASTER AND SLAVE MOVER
+
+/*The master will read data from its IMU and get the data from a second Mover.
+It'll also do the main calculations necessary to make walk-in-place movement work*/
+#define MASTER_MOVER
+
+/*The slave mover will read data from its IMU and send it to the master, 
+to let it manage it*/
+//#define SLAVE_MOVER
+
+//////////////////////////////////////////////////
+
 void setup()
 {
-  //Wire.begin();
+
   setupIMU();
   setupBluetooth();
   //setupGamepadEmulation();
-
 }
 
-/*Master mover should read data from another mover and do all the calculations.
- The other one should only send data to the main one*/
-#define MASTER_MOVER
-//#define SLAVE_MOVER
-
-byte x = 0;
-
-
-//Main methods
-
-
 /////////////////////////////////////////
+
 void loop()
 {
-   
-  #ifdef SLAVE_MOVER
-    VectorInt16 test = getRealAcceleration();
-    sendBluetoothData(test.x);
-  #endif
 
 
+  VectorInt16 movement = getRealAcceleration();
 
-  #ifdef MASTER_MOVER
-    int16_t t  = getBluetoothData();
-    Serial.println(t);
-  #endif
+#ifdef MASTER_MOVER
 
+  //todo it should be another VectorInt16
+  //int16_t secondMovement = getBluetoothData();
+
+  checkMotion(movement);
+  
+  //checkMotion(secondMovement);
+#endif
+
+#ifdef SLAVE_MOVER
+  sendBluetoothData(test.x);
+#endif
 
   /*STILL DEBUG STUFF*/
 
   //printWorldAcceleration();
 
- // Wire.beginTransmission(2); // transmit to device #4
+  // Wire.beginTransmission(2); // transmit to device #4
 
   //Serial.println(test.x);
   //Wire.write(2);
