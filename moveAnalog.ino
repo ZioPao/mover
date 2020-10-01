@@ -15,7 +15,7 @@ void setupGamepadEmulation()
     last_value = 0;
 }
 
-bool checkMotion(int16_t accel)
+bool manageMotion(int16_t accel)
 {
 
     if (!is_moving && abs(accel) >= MIN_Y)

@@ -7,7 +7,7 @@ void setupBluetooth()
 int16_t getBluetoothData()
 {
   //Reassembles the value in a 16 bit one
-  if (Serial1.available() > 0)
+  if (Serial1.available() > 1)
   {
     byte a = Serial1.read();
     byte b = Serial1.read();
@@ -26,5 +26,7 @@ void sendBluetoothData(int16_t value)
   byteArray[1] = value & 0xFF;
 
   Serial1.write(byteArray, 2);
-  //Serial.println("sent -> " + value);
+  Serial.print("sent -> ");
+  Serial.print(value);
+  Serial.println("");
 }

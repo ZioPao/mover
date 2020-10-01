@@ -34,11 +34,13 @@ void loop()
 
   //todo it should be another VectorInt16
   int16_t secondMovementY = getBluetoothData();
-  Serial.println(secondMovementY);
+  //Serial.print("dato arrivato da slave:\t");
+  Serial.print(secondMovementY);
+  //Serial.println("");
 
-  //checkMotion(movement);
+  manageMotion(movement.y);   
+  manageMotion(secondMovementY);
 
-  //checkMotion(secondMovement);
 #endif
 
 #ifdef SLAVE_MOVER
