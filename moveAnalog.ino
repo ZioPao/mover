@@ -5,14 +5,14 @@
 #define MIN_X 4000
 #define INCREMENT 500
 
-bool is_moving;
-int16_t last_value;
+bool isMoving;
+int16_t lastValue;;
 
 void setupGamepadEmulation()
 {
     XInput.begin();
-    is_moving = false;
-    last_value = 0;
+    isMoving = false;
+    lastValue = 0;
 }
 
 bool manageMotion(int16_t accel)
@@ -24,21 +24,21 @@ bool manageMotion(int16_t accel)
           //delay(300);
 
 
-        if(is_moving && abs(accel) > abs(last_value)){
+        if(isMoving && abs(accel) > abs(lastValue)){
             int16_t tmp_accel = XInput.getJoystickY(JOY_LEFT) + INCREMENT;
             XInput.setJoystickY(JOY_LEFT, tmp_accel); //Incrementa velocità
-            last_value = tmp_accel;                   //Saves it
+            lastValue = tmp_accel;                   //Saves it
         }
-        else if (!is_moving){
+        else if (!isMoving){
             //Start moving
             XInput.setJoystickY(JOY_LEFT, 2000);
-            last_value = 2000; //default
-            is_moving = true;
+            lastValue = 2000; //default
+            isMoving = true;
         }
         else{
             XInput.setJoystickY(JOY_LEFT, 0);
-            is_moving = false; //stop
-            last_value = 0;
+            isMoving = false; //stop
+            lastValue = 0;
         }
     }
 }

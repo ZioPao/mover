@@ -1,3 +1,6 @@
+#include "helper_3dmath.h"
+
+
 bool is_data_written;
 
 
@@ -7,6 +10,8 @@ void setupBluetooth()
   is_data_written = false;
   Serial.println("Avviata comunicazione bluetooth");
 }
+
+bool check_bluetooth_connection;
 
 int16_t getBluetoothData()
 {

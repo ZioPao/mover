@@ -1,6 +1,5 @@
-#include "I2Cdev.h"
 #include "helper_3dmath.h"
-#include <Wire.h>
+
 
 ///////////////////////////////////////////////////
 /*MASTER AND SLAVE MOVER
@@ -15,22 +14,24 @@ to let it manage it*/
 
 //////////////////////////////////////////////////
 
+//Setup variables
+bool is_init_done;
+
 void setup()
 {
 
-  #ifdef MASTER_MOVER
+#ifdef MASTER_MOVER
   Serial.println("===========MASTER============");
-  #endif
-  #ifdef SLAVE_MOVER
+#endif
+#ifdef SLAVE_MOVER
   Serial.println("===========SLAVE============");
-  #endif
-  
+#endif
+
+  is_init_done = false;
+
   setupIMU();
   setupBluetooth();
   //setupGamepadEmulation();
-
-  //DEBUG
-  pinMode(9, OUTPUT);
 }
 
 /////////////////////////////////////////
@@ -44,12 +45,12 @@ void loop()
 
   //todo it should be another VectorInt16
   int16_t secondMovementY = getBluetoothData();
-  if (secondMovementY != 0){
+  if (secondMovementY != 0)
+  {
     Serial.print("dato arrivato da slave:\t");
-  Serial.print(secondMovementY);
-  Serial.println("");
+    Serial.print(secondMovementY);
+    Serial.println("");
   }
-
 
   //manageMotion(movement.y);
   //manageMotion(secondMovementY);
