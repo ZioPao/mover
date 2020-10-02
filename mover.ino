@@ -18,9 +18,19 @@ to let it manage it*/
 void setup()
 {
 
+  #ifdef MASTER_MOVER
+  Serial.println("===========MASTER============");
+  #endif
+  #ifdef SLAVE_MOVER
+  Serial.println("===========SLAVE============");
+  #endif
+  
   setupIMU();
   setupBluetooth();
   //setupGamepadEmulation();
+
+  //DEBUG
+  pinMode(9, OUTPUT);
 }
 
 /////////////////////////////////////////
@@ -34,12 +44,15 @@ void loop()
 
   //todo it should be another VectorInt16
   int16_t secondMovementY = getBluetoothData();
-  //Serial.print("dato arrivato da slave:\t");
+  if (secondMovementY != 0){
+    Serial.print("dato arrivato da slave:\t");
   Serial.print(secondMovementY);
-  //Serial.println("");
+  Serial.println("");
+  }
 
-  manageMotion(movement.y);   
-  manageMotion(secondMovementY);
+
+  //manageMotion(movement.y);
+  //manageMotion(secondMovementY);
 
 #endif
 
@@ -49,6 +62,7 @@ void loop()
 #endif
 
   /*STILL DEBUG STUFF*/
+  digitalWrite(9, LOW);
 
   //printWorldAcceleration();
 
