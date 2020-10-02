@@ -1,8 +1,6 @@
-#include "helper_3dmath.h"
-
+#include "header.h"
 
 bool is_data_written;
-
 
 void setupBluetooth()
 {
@@ -11,26 +9,70 @@ void setupBluetooth()
   Serial.println("Avviata comunicazione bluetooth");
 }
 
-bool check_bluetooth_connection;
+bool checkBluetoothConnection()
+{
+
+/*The master sends a bit to check if connection has been estabilished. 
+  If the slave returns a bit, then the normal loop starts*/
+#ifdef MASTER_MOVER
+  Serial1.write(1);
+
+  while (Serial1.available() != 0)
+  {
+    Serial.println("Waiting for BT connection");
+  }
+
+  //When the loop ends, it checks wheter or not it's a single bit
+  if (Serial1.available() == 1)
+  {
+    Serial1.read();
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+
+#endif
+
+#ifdef SLAVE_MOVER
+
+  while (Serial1.available() == 0)
+  {
+    Serial.println("Waiting for master");
+  }
+
+  if (Serial1.available() == 1)
+  {
+    Serial.read();   //flush
+    Serial.write(1); //sends confirmation
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+
+#endif
+}
 
 int16_t getBluetoothData()
 {
-  
+
   //Serial.print("Serial1: ");
   //Serial.print(Serial1.available());
   //Serial.println("");
 
-  
   //Reassembles the value in a 16 bit one
   if (Serial1.available() == 2)
   {
 
     byte a = Serial1.read();
     byte b = Serial1.read();
-    
+
     //Send confirmation
     Serial1.write(1);
-    
+
     return (int16_t)(a << 8 | b);
     //return Serial1.read();
   }
@@ -41,26 +83,26 @@ int16_t getBluetoothData()
 void sendBluetoothData(int16_t value)
 {
   //Necessary to write 16 bits values
-  if (Serial1.available()  > 0){
-    Serial1.read();   //flush
+  if (Serial1.available() > 0)
+  {
+    Serial1.read(); //flush
     Serial.println("Flush");
 
     is_data_written = false;
   }
 
-  if (is_data_written == false){
-      byte byteArray[2];
+  if (is_data_written == false)
+  {
+    byte byteArray[2];
 
-  byteArray[0] = (value >> 8) & 0xFF;
-  byteArray[1] = value & 0xFF;
+    byteArray[0] = (value >> 8) & 0xFF;
+    byteArray[1] = value & 0xFF;
 
-  Serial1.write(byteArray, 2);
-  is_data_written = true;
-  
-  Serial.print("sent -> ");
-  Serial.print(value);
-  Serial.println("");
+    Serial1.write(byteArray, 2);
+    is_data_written = true;
+
+    Serial.print("sent -> ");
+    Serial.print(value);
+    Serial.println("");
   }
-
-
 }

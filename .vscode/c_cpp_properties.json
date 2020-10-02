@@ -29,10 +29,7 @@
                 "c:\\program files (x86)\\arduino\\hardware\\tools\\avr\\avr\\include"
             ],
             "forcedInclude": [
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h",
-                "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\moveAnalog.ino",
-                "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\bluetoothLink.ino",
-                "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\IMU.ino"
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
             ],
             "cStandard": "c11",
             "cppStandard": "c++11",
