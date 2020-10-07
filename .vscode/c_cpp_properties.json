@@ -21,18 +21,25 @@
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\leonardo",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\MPU6050",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\BluetoothLink",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\XInputMovement",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\IMU",
                 "C:\\Users\\aless\\Documents\\Arduino\\libraries\\I2Cdev",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\ArduinoXInput-1.2.3\\src",
                 "c:\\program files (x86)\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\7.3.0\\include",
                 "c:\\program files (x86)\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\7.3.0\\include-fixed",
-                "c:\\program files (x86)\\arduino\\hardware\\tools\\avr\\avr\\include"
+                "c:\\program files (x86)\\arduino\\hardware\\tools\\avr\\avr\\include",
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**",
+                "C:\\Program Files (x86)\\Arduino\\tools\\**",
+                "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\components\\**"
             ],
             "forcedInclude": [
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h",
-                "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\bluetoothLink.ino",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\BluetoothLink\\bluetoothLink.h",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\XInputMovement\\xinputMovement.h",
                 "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\IMU.ino",
-                "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\moveAnalog.ino",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\MPU6050\\helper_3dmath.h",
                 "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\header.h"
             ],
             "cStandard": "c11",

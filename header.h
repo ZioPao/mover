@@ -1,4 +1,7 @@
+#include "bluetoothLink.h"
+#include "xinputMovement.h"
 #include "helper_3dmath.h"
+
 
 ///////////////////////////////////////////////////
 /*MASTER AND SLAVE MOVER
@@ -12,3 +15,9 @@ to let it manage it*/
 //#define SLAVE_MOVER
 
 //////////////////////////////////////////////////
+
+
+//////////////////////////////////////////
+/*DEBUG*/
+
+//#define DISABLE_BT_TEST

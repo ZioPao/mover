@@ -1,5 +1,7 @@
 {
     "sketch": "mover.ino",
     "board": "arduino:avr:leonardo",
-    "port": "COM6"
+    "port": "COM7",
+    "arduino.path": "C:/Program Files (x86)/Arduino",
+    "arduino.commandPath": "arduino_debug.exe"
 }
