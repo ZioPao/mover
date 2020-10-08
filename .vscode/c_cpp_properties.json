@@ -23,7 +23,8 @@
                 "C:\\Program Files (x86)\\Arduino\\libraries\\MPU6050",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\BluetoothLink",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\XInputMovement",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\IMU",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\SerialTransfer",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\IMUManager",
                 "C:\\Users\\aless\\Documents\\Arduino\\libraries\\I2Cdev",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\ArduinoXInput-1.2.3\\src",
@@ -36,8 +37,11 @@
             ],
             "forcedInclude": [
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\SerialTransfer\\I2CTransfer.h",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\BluetoothLink\\bluetoothLink.h",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\XInputMovement\\xinputMovement.h",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\SerialTransfer\\SerialTransfer.h",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\Timer\\timer.h",
                 "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\IMU.ino",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\MPU6050\\helper_3dmath.h",
                 "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\header.h"

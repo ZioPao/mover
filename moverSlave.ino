@@ -2,7 +2,10 @@
 
 //Setup variables
 bool isConnectionEstabilished;
+Timer timer;
 
+//Acceleration variables
+int16_t fMov, sMov;
 void setup()
 {
 
@@ -11,12 +14,25 @@ void setup()
   setupBluetooth();
   //setupGamepadEmulation();
 
+  fMov = 0;
+  sMov = 0;
+  timer.startTimer(1000, printValues);
 #ifdef DISABLE_BT_TEST
   setupIMU();
   isConnectionEstabilished = true;
 #endif
 }
 
+/////////////////////////////////////////
+void printValues(int timer)
+{
+  Serial.print("Main value -> ");
+  Serial.print(fMov);
+
+  Serial.print("   ");
+  Serial.println();
+
+}
 /////////////////////////////////////////
 void loop()
 {
@@ -35,8 +51,9 @@ void loop()
   else
   {
     //Main loop
-    VectorInt16 movement = getRealAcceleration();
+    timer.runTimers();
+    fMov = getRealAcceleration();
 
-    sendBluetoothData(movement.y);
+    sendBluetoothData(fMov);
   }
 }

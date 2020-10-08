@@ -1,6 +1,8 @@
 #include "bluetoothLink.h"
 #include "xinputMovement.h"
 #include "helper_3dmath.h"
+#include "timer.h"
+#include "Wire.h"
 
 
 ///////////////////////////////////////////////////
@@ -20,4 +22,4 @@ to let it manage it*/
 //////////////////////////////////////////
 /*DEBUG*/
 
-//#define DISABLE_BT_TEST
+#define DISABLE_BT_TEST
