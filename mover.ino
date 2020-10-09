@@ -1,8 +1,11 @@
 #include "header.h"
 
 //Setup variables
-bool isConnectionEstabilished;
+bool isConnectionEstabilished = false;
 Timer timer;
+
+XinputMovement xinputMovement;
+BluetoothLink bluetoothLink;
 
 //Acceleration variables
 int16_t fMov, sMov;
@@ -10,12 +13,10 @@ int16_t fMov, sMov;
 void setup()
 {
   isConnectionEstabilished = false;
-  setupBluetooth();
-  //setupGamepadEmulation();
 
   fMov = 0;
   sMov = 0;
-  timer.startTimer(1000, printValues);
+  timer.startTimer(TIMER_PRINTING, printValues);
 
 #ifdef DISABLE_BT_TEST
   setupIMU();
@@ -46,7 +47,7 @@ void loop()
   if (!isConnectionEstabilished)
   {
 
-    if (checkBTConnectionMaster())
+    if (bluetoothLink.checkConnectionMaster())
     {
       isConnectionEstabilished = true;
       setupIMU();
@@ -59,10 +60,8 @@ void loop()
     timer.runTimers();
 
     fMov = getRealAcceleration();
-    //fMov = movement.y;
-    sMov = getBluetoothData();
+    sMov = bluetoothLink.getData();
 
-    //manageMotion(movement.y);
-    //manageMotion(secondMovementY);
+    xinputMovement.manageMotion(fMov, sMov);
   }
 }
