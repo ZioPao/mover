@@ -1,14 +1,16 @@
 #include "header.h"
 
 //Setup variables
-bool isConnectionEstabilished = false;
+bool isConnectionEstabilished;
 Timer timer;
-
-XinputMovement xinputMovement;
-BluetoothLink bluetoothLink;
 
 //Acceleration variables
 int16_t fMov, sMov;
+
+//Components
+XinputMovement xinputMovement;
+BluetoothLink bluetoothLink;
+IMUManager imuManager;
 
 void setup()
 {
@@ -19,7 +21,6 @@ void setup()
   timer.startTimer(TIMER_PRINTING, printValues);
 
 #ifdef DISABLE_BT_TEST
-  setupIMU();
   isConnectionEstabilished = true;
 #endif
 }
@@ -50,7 +51,6 @@ void loop()
     if (bluetoothLink.checkConnectionMaster())
     {
       isConnectionEstabilished = true;
-      setupIMU();
     }
   }
   else
@@ -59,7 +59,7 @@ void loop()
 
     timer.runTimers();
 
-    fMov = getRealAcceleration();
+    //fMov = getRealAcceleration();
     sMov = bluetoothLink.getData();
 
     xinputMovement.manageMotion(fMov, sMov);

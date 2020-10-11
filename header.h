@@ -1,5 +1,6 @@
 #include "bluetoothLink.h"
 #include "xinputMovement.h"
+#include "IMUManager.h"
 #include "helper_3dmath.h"
 #include "timer.h"
 #include "Wire.h"

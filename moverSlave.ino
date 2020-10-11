@@ -7,8 +7,10 @@ Timer timer;
 //Acceleration variables
 int16_t fMov, sMov;
 
+//Components
 XinputMovement xinputMovement;
 BluetoothLink bluetoothLink;
+IMUManager imuManager;
 
 void setup()
 {
@@ -50,7 +52,7 @@ void loop()
   {
     //Main loop
     timer.runTimers();
-    fMov = getRealAcceleration();
+    fMov = bluetoothLink.getData();
 
     bluetoothLink.sendData(fMov);
   }
