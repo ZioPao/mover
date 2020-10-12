@@ -20,12 +20,10 @@
             "includePath": [
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\leonardo",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\MPU6050",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\BluetoothLink",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\XInputMovement",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\IMUManager",
-
                 "C:\\Program Files (x86)\\Arduino\\libraries\\SerialTransfer",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\IMUManager",
                 "C:\\Users\\aless\\Documents\\Arduino\\libraries\\I2Cdev",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\ArduinoXInput-1.2.3\\src",
@@ -45,7 +43,6 @@
                 "C:\\Program Files (x86)\\Arduino\\libraries\\IMUManager\\IMUManager.h",
 
                 "C:\\Program Files (x86)\\Arduino\\libraries\\Timer\\timer.h",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\MPU6050\\helper_3dmath.h",
                 "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\header.h"
             ],
             "cStandard": "c11",

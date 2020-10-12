@@ -12,9 +12,11 @@ XinputMovement xinputMovement;
 BluetoothLink bluetoothLink;
 IMUManager imuManager;
 
+
 void setup()
 {
   isConnectionEstabilished = false;
+  imuManager.setup();
 
   fMov = 0;
   sMov = 0;
@@ -52,7 +54,7 @@ void loop()
   {
     //Main loop
     timer.runTimers();
-    fMov = bluetoothLink.getData();
+    fMov = imuManager.getRealAcceleration();
 
     bluetoothLink.sendData(fMov);
   }

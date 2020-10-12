@@ -15,7 +15,7 @@ IMUManager imuManager;
 void setup()
 {
   isConnectionEstabilished = false;
-
+  imuManager.setup();
   fMov = 0;
   sMov = 0;
   timer.startTimer(TIMER_PRINTING, printValues);
@@ -59,9 +59,9 @@ void loop()
 
     timer.runTimers();
 
-    //fMov = getRealAcceleration();
+    fMov = imuManager.getRealAcceleration();
     sMov = bluetoothLink.getData();
 
-    xinputMovement.manageMotion(fMov, sMov);
+    //xinputMovement.manageMotion(fMov, sMov);
   }
 }
