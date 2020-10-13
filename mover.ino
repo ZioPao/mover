@@ -29,6 +29,15 @@ void setup()
 #ifdef DISABLE_BT_TEST
   isConnectionEstabilished = true;
 #endif
+
+  //BT test connection
+  while (!isConnectionEstabilished)
+  {
+    if (bluetoothLink.checkConnectionMaster())
+    {
+      isConnectionEstabilished = true;
+    }
+  }
 }
 
 /////////////////////////////////////////
@@ -49,33 +58,18 @@ void printValues()
 void loop()
 {
 
-  //BT Connection test
+  //Gets the necessary values
+  fMov = imuManager.getRealAcceleration();
+  sMov = bluetoothLink.getData();
 
-  if (!isConnectionEstabilished)
+  //Printing and debug
+  if (timerPrinting.update())
   {
-
-    if (bluetoothLink.checkConnectionMaster())
-    {
-      isConnectionEstabilished = true;
-    }
+    printValues();
   }
-  else
+
+  if (timerMovement.update())
   {
-    //Main loop
-
-    //Gets the necessary values
-    fMov = imuManager.getRealAcceleration();
-    sMov = bluetoothLink.getData();
-
-    //Printing and debug
-    if (timerPrinting.update())
-    {
-      printValues();
-    }
-
-    if (timerMovement.update())
-    {
-      xinputMovement.manageMotions(fMov, sMov);
-    }
+    xinputMovement.manageMotions(fMov, sMov);
   }
 }
