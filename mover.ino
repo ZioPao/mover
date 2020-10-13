@@ -62,6 +62,6 @@ void loop()
     fMov = imuManager.getRealAcceleration();
     sMov = bluetoothLink.getData();
 
-    //xinputMovement.manageMotion(fMov, sMov);
+    xinputMovement.manageMotions(fMov, sMov);
   }
 }
