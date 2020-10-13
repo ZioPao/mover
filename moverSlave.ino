@@ -10,7 +10,6 @@ MiniTimer timerPrinting;
 int16_t fMov;
 
 //Components
-XinputMovement xinputMovement;
 BluetoothLink bluetoothLink;
 IMUManager imuManager;
 
