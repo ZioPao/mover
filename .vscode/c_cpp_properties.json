@@ -20,11 +20,8 @@
             "includePath": [
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\leonardo",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\BluetoothLink",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\XInputMovement",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\SerialTransfer",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\IMUManager",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\MiniTimer",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\MoverLibs",
                 "C:\\Users\\aless\\Documents\\Arduino\\libraries\\I2Cdev",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\ArduinoXInput-1.2.3\\src",
@@ -38,11 +35,11 @@
             "forcedInclude": [
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\SerialTransfer\\I2CTransfer.h",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\BluetoothLink\\bluetoothLink.h",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\XInputMovement\\xinputMovement.h",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\MoverLibs\\bluetoothLink.h",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\MoverLibs\\xinputMovement.h",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\SerialTransfer\\SerialTransfer.h",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\IMUManager\\IMUManager.h",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\MiniTimer\\MiniTimer.h",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\MoverLibs\\IMUManager.h",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\MoverLibs\\MiniTimer.h",
                 "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\header.h"
             ],
             "cStandard": "c11",
