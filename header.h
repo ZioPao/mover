@@ -1,14 +1,15 @@
 #include "bluetoothLink.h"
 #include "xinputMovement.h"
 #include "IMUManager.h"
+#include "MiniTimer.h"
 #include "helper_3dmath.h"
-#include "timer.h"
 #include "Wire.h"
 
 //////////////////////////////////////////////////
 
 /*Rate of printing debug values in the Serial monitor*/
 #define TIMER_PRINTING 500
+#define TIMER_MOVEMENT 300        //Necessary to smooth out the Y-AXIS movement, since at "full speed" it would be pretty jittery
 
 //////////////////////////////////////////
 /*DEBUG*/

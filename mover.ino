@@ -2,7 +2,10 @@
 
 //Setup variables
 bool isConnectionEstabilished;
-Timer timer;
+
+//Timer stuff
+MiniTimer timerPrinting;
+MiniTimer timerMovement;
 
 //Acceleration variables
 int16_t fMov, sMov;
@@ -18,7 +21,10 @@ void setup()
   imuManager.setup();
   fMov = 0;
   sMov = 0;
-  timer.startTimer(TIMER_PRINTING, printValues);
+
+  //Timer setup
+  timerPrinting.setup(TIMER_PRINTING);
+  timerMovement.setup(TIMER_MOVEMENT);
 
 #ifdef DISABLE_BT_TEST
   isConnectionEstabilished = true;
@@ -26,7 +32,7 @@ void setup()
 }
 
 /////////////////////////////////////////
-void printValues(int timer)
+void printValues()
 {
   Serial.print("Main value -> ");
   Serial.print(fMov);
@@ -57,11 +63,19 @@ void loop()
   {
     //Main loop
 
-    timer.runTimers();
-
+    //Gets the necessary values
     fMov = imuManager.getRealAcceleration();
     sMov = bluetoothLink.getData();
 
-    xinputMovement.manageMotions(fMov, sMov);
+    //Printing and debug
+    if (timerPrinting.update())
+    {
+      printValues();
+    }
+
+    if (timerMovement.update())
+    {
+      xinputMovement.manageMotions(fMov, sMov);
+    }
   }
 }
