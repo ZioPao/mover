@@ -1,9 +1,10 @@
 #include "bluetoothLink.h"
 #include "xinputMovement.h"
 #include "IMUManager.h"
-#include "MiniTimer.h"
 #include "helper_3dmath.h"
 #include "Wire.h"
+
+//Timer utils is included in another header file (xinputMovement.h)
 
 //////////////////////////////////////////////////
 

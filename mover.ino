@@ -68,8 +68,6 @@ void loop()
     printValues();
   }
 
-  if (timerMovement.update())
-  {
     xinputMovement.manageMotions(fMov, sMov);
-  }
+  
 }
