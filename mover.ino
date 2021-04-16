@@ -17,6 +17,12 @@ IMUManager imuManager;
 
 void setup()
 {
+
+
+  //TEST
+  pinMode(17, OUTPUT);
+
+
   isConnectionEstabilished = false;
   imuManager.setup();
   fMov = 0;
