@@ -33,10 +33,7 @@ void setup()
   //BT test connection
   while (!isConnectionEstabilished)
   {
-    if (bluetoothLink.checkConnectionMaster())
-    {
-      isConnectionEstabilished = true;
-    }
+    isConnectionEstabilished = bluetoothLink.checkConnectionMaster();
   }
 }
 
