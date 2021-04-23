@@ -39,7 +39,7 @@
                 "C:\\Program Files (x86)\\Arduino\\libraries\\MoverLibs\\xinputMovement.h",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\SerialTransfer\\SerialTransfer.h",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\MoverLibs\\IMUManager.h",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\MoverLibs\\timerUtils.h",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\MoverLibs\\helperClasses.h",
                 "C:\\Users\\aless\\Desktop\\arduinostuff\\MOVER MAIN\\mover\\header.h"
             ],
             "cStandard": "c11",
