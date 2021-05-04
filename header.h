@@ -14,5 +14,5 @@
 
 //////////////////////////////////////////
 /*DEBUG*/
-
-#define DISABLE_BT_TEST
+#define ENABLE_IMU
+//#define DISABLE_BT_TEST

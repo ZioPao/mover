@@ -62,8 +62,9 @@ void loop()
 {
 
   //Gets the necessary values
-  fMov = imuManager.getRealAcceleration();
-  sMov = bluetoothLink.getData();
+  //fMov = imuManager.getRealAcceleration();
+  fMov = imuManager.getGyroStatus();
+  //sMov = bluetoothLink.getData();
 
   //Printing and debug
   if (timerPrinting.update())
@@ -71,6 +72,6 @@ void loop()
     printValues();
   }
 
-    xinputMovement.manageMotions(fMov, sMov);
+    //xinputMovement.manageMotions(fMov, sMov);
   
 }
