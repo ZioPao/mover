@@ -22,35 +22,65 @@ void setup()
 
   while (!Serial)
     ; // wait for Leonardo enumeration, others continue immediately
-    
-  delay(3000);
 
-  Serial.begin(9600); //not sure if it's correct
+  Serial.begin(38400);
   Serial.println("MASTER");
+
+  delay(100); //Await Serial connection... todo handshake
 
   //Await Serial connection... todo handshake
   isManagerConnectionEstabilished = false;
   isBluetoothConnectionEstabilished = false;
 
+  Serial.println("Waiting connection with manager");
   while (!isManagerConnectionEstabilished)
   {
     char chk_connection = Serial.read();
     isManagerConnectionEstabilished = (chk_connection == 'c');
   }
-  
+
 #ifdef DISABLE_BT_TEST
   isConnectionEstabilished = true;
 #endif
 
+  Serial.println("Waiting connection with other mover");
   //BT test connection
   while (!isBluetoothConnectionEstabilished)
   {
     isBluetoothConnectionEstabilished = bluetoothLink.checkConnectionMaster();
   }
+
+  Serial.println("Setup IMU");
 #ifdef ENABLE_IMU
   imuManager.setup();
 #endif
 
+  Serial.println("Setup timers");
+  //Timer setup
+  timerPrinting.setup(TIMER_PRINTING);
+  timerMovement.setup(TIMER_MOVEMENT);
+}
+
+void reset()
+{
+
+  //Await Serial connection... todo handshake
+  isManagerConnectionEstabilished = false;
+  isBluetoothConnectionEstabilished = false;
+
+  Serial.println("Waiting connection with manager");
+  while (!isManagerConnectionEstabilished)
+  {
+    char chk_connection = Serial.read();
+    isManagerConnectionEstabilished = (chk_connection == 'c');
+  }
+
+  Serial.println("Setup IMU");
+#ifdef ENABLE_IMU
+  imuManager.setup();
+#endif
+
+  Serial.println("Setup timers");
   //Timer setup
   timerPrinting.setup(TIMER_PRINTING);
   timerMovement.setup(TIMER_MOVEMENT);
@@ -112,7 +142,7 @@ void checkEvents()
   case 'r':
 
     //rerun setup
-    setup();
+    reset();
     break;
   }
 }
