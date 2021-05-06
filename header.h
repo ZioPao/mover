@@ -11,7 +11,7 @@
 //////////////////////////////////////////////////
 
 /*Rate of printing debug values in the Serial monitor*/
-#define TIMER_PRINTING 500
+#define TIMER_PRINTING 100
 #define TIMER_MOVEMENT 300        //Necessary to smooth out the Y-AXIS movement, since at "full speed" it would be pretty jittery
 
 //////////////////////////////////////////

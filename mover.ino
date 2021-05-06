@@ -43,16 +43,20 @@ void setup()
   isConnectionEstabilished = true;
 #endif
 
-  Serial.println("Waiting connection with other mover");
-  //BT test connection
-  while (!isBluetoothConnectionEstabilished)
-  {
-    isBluetoothConnectionEstabilished = bluetoothLink.checkConnectionMaster();
-  }
+  // Serial.println("Waiting connection with other mover");
+  // //BT test connection
+  // while (!isBluetoothConnectionEstabilished)
+  // {
+  //   isBluetoothConnectionEstabilished = bluetoothLink.checkConnectionMaster();
+  // }
 
   Serial.println("Setup IMU");
 #ifdef ENABLE_IMU
-  imuManager.setup();
+
+
+// Sensor readings with offsets:   8       0       16382   1       0       1
+// Your offsets:   		-286    -315    1693    54      -49     -32
+  imuManager.setup(-285, -315, 1693, 54, -49, -3);
 #endif
 
   Serial.println("Setup timers");
@@ -77,7 +81,7 @@ void reset()
 
   Serial.println("Setup IMU");
 #ifdef ENABLE_IMU
-  imuManager.setup();
+  imuManager.setup(-285, -315, 1693, 54, -49, -3);
 #endif
 
   Serial.println("Setup timers");
@@ -99,7 +103,7 @@ void printValues()
   Serial.print(",");
   Serial.print(mAcc.y);
   Serial.print(",");
-  Serial.print(mAcc.z);
+  Serial.print(mAcc.z - 16384);
   Serial.print(",");
 
   //Gyroscope
@@ -119,7 +123,7 @@ void printValues()
   Serial.print(",");
   Serial.print(sAcc.y);
   Serial.print(",");
-  Serial.print(sAcc.z);
+  Serial.print(sAcc.z - 16384);
   Serial.print(",");
 
   //Gyroscope
@@ -127,7 +131,7 @@ void printValues()
   Serial.print(",");
   Serial.print(sGyr.y);
   Serial.print(",");
-  Serial.print(sGyr.z);
+  Serial.print(sGyr.z - 16384);
 
   Serial.println();
 }

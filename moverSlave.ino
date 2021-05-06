@@ -30,7 +30,8 @@ void setup()
 
   isManagerConnectionEstabilished = false;
   isBluetoothConnectionEstabilished = false;
-
+  
+  Serial.println("Waiting connection with manager");
   while (!isManagerConnectionEstabilished)
   {
     char chk_connection = Serial.read();
@@ -41,16 +42,20 @@ void setup()
   isConnectionEstabilished = true;
 #endif
 
-  //BT test connection
-  while (!isBluetoothConnectionEstabilished)
-  {
-    isBluetoothConnectionEstabilished = bluetoothLink.checkConnectionMaster();
-  }
-#ifdef ENABLE_IMU
-  imuManager.setup();
-#endif
+  // Serial.println("Waiting connection with other mover");
+  // //BT test connection
+  // while (!isBluetoothConnectionEstabilished)
+  // {
+  //   isBluetoothConnectionEstabilished = bluetoothLink.checkConnectionMaster();
+  // }
 
-  //Timer setup
+  Serial.println("Setup IMU");
+
+//   Sensor readings with offsets:   5       -3      16381   1       1       0
+// Your offsets:                 141     -1439   336     -17     1       6
+  imuManager.setup(141, -1439, 336, -17, 1, 6);
+
+  Serial.println("Setup timers");
   timerPrinting.setup(TIMER_PRINTING);
   timerMovement.setup(TIMER_MOVEMENT);
 }
@@ -71,7 +76,7 @@ void reset()
 
   Serial.println("Setup IMU");
 #ifdef ENABLE_IMU
-  imuManager.setup();
+  imuManager.setup(141, -1439, 336, -17, 1, 6);
 #endif
 
   Serial.println("Setup timers");
@@ -85,27 +90,7 @@ void printValues()
 {
 
   /* VALUES FROM MAIN MOVER*/
-  Serial.print("main");
-  Serial.println();
-
-  //Accelerometer
-  Serial.print(mAcc.x);
-  Serial.print(",");
-  Serial.print(mAcc.y);
-  Serial.print(",");
-  Serial.print(mAcc.z);
-  Serial.print(",");
-
-  //Gyroscope
-  Serial.print(mGyr.x);
-  Serial.print(",");
-  Serial.print(mGyr.y);
-  Serial.print(",");
-  Serial.print(mGyr.z);
-
-  /* VALUES FROM SLAVE MOVER*/
-  Serial.println();
-  Serial.print("slave");
+  Serial.print("SLAVE DEBUG");
   Serial.println();
 
   //Accelerometer
@@ -144,19 +129,13 @@ void checkEvents()
 void loop()
 {
 
-#ifdef ENABLE_IMU
   imuManager.getGyroAndAccelValues(&sAcc, &sGyr);
-#else
-  sAcc = VectorInt16(1, 1, 1);
-  sGyr = VectorInt16(1, 1, 1);
-#endif
-
   bluetoothLink.sendData(sAcc, sGyr);
 
   // Printing and debug
   if (timerPrinting.update())
   {
-    // printValues();
+    printValues();
   }
 
   //Event handling from outer inputs like the manager
