@@ -129,20 +129,8 @@ void checkEvents()
 
 void loop()
 {
-
   imuManager.getGyroAndAccelValues(&sAcc, &sGyr);
-  uint16_t send_data = bluetoothLink.sendData(sAcc, sGyr);
+  bluetoothLink.sendData(sAcc, sGyr);
 
-
-  // Printing and debug
-  //if (timerPrinting.update())
-  //{
-  //  printValues();
-  //  Serial.print("Sent data: ");
-  //  Serial.print(send_data);
-  //  Serial.println();
-  //}
-
-  //Event handling from outer inputs like the manager
   checkEvents();
 }

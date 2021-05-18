@@ -161,13 +161,9 @@ void checkEvents()
 
 void loop()
 {
-
   imuManager.getGyroAndAccelValues(&mAcc, &mGyr);
   bluetoothLink.getData(&sAcc, &sGyr);
 
-  //Serial.println("Test X");
-  //Serial.println(sAcc.x);
-  // Printing and debug
   if (timerPrinting.update())
   {
       printValues();
@@ -177,5 +173,4 @@ void loop()
   //Event handling from outer inputs like the manager
   checkEvents();
 
-  //xinputMovement.manageMotions(fMov, sMov);
 }

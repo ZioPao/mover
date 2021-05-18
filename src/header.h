@@ -11,7 +11,7 @@
 //////////////////////////////////////////////////
 
 /*Rate of printing debug values in the Serial monitor*/
-#define TIMER_PRINTING 15
+#define TIMER_PRINTING 70
 #define TIMER_MOVEMENT 300         
 //////////////////////////////////////////
 /*DEBUG*/
