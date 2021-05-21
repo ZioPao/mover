@@ -32,12 +32,14 @@ void setup()
   isManagerConnectionEstabilished = false;
   isBluetoothConnectionEstabilished = false;
 
+#ifndef DISABLE_MANAGER_CONNECTION
   Serial.println("Waiting connection with manager");
   while (!isManagerConnectionEstabilished)
   {
     char chk_connection = Serial.read();
     isManagerConnectionEstabilished = (chk_connection == 'c');
   }
+#endif
 
 #ifdef DISABLE_BT_TEST
   isBluetoothConnectionEstabilished = true;
@@ -97,11 +99,13 @@ void printValues()
 
 
   // MAIN MOVER
-  String m_acc = String(mAcc.x);
+  String m_acc = "m ";
+
+  m_acc += String(mAcc.x);
   m_acc += ",";
   m_acc += String(mAcc.y);
   m_acc += ",";
-  m_acc += String(mAcc.z - 16384);
+  m_acc += String(mAcc.z);
   m_acc += ",";
 
   String m_gyr = String(mGyr.x);
@@ -111,11 +115,13 @@ void printValues()
   m_gyr += String(mGyr.z);
 
 
-  String s_acc = String(sAcc.x);
+
+  String s_acc = " s ";
+  s_acc += String(sAcc.x);
   s_acc += ",";
   s_acc += String(sAcc.y);
   s_acc += ",";
-  s_acc += String(sAcc.z - 16384);
+  s_acc += String(sAcc.z);
   s_acc += ",";
 
   String s_gyr = String(sGyr.x);
@@ -124,22 +130,13 @@ void printValues()
   s_gyr += ",";
   s_gyr += String(sGyr.z);
 
+  s_gyr += " e";
+
   String final_m_string = m_acc + m_gyr;
   String final_s_string = s_acc + s_gyr;
 
-
-  Serial.print(F("main"));
-  Serial.println();
-
-  Serial.print(final_m_string);
-
-  Serial.println();
-  Serial.print(F("slave"));
-  Serial.println();
-  
-  Serial.print(final_s_string);
-
-  Serial.println();
+  //Serial.println(final_s_string);
+  //Serial.flush();
 
 }
 
@@ -161,14 +158,15 @@ void checkEvents()
 
 void loop()
 {
-  imuManager.getGyroAndAccelValues(&mAcc, &mGyr);
-  bluetoothLink.getData(&sAcc, &sGyr);
+  mAcc = imuManager.getAccelValues();
+  sAcc = bluetoothLink.getData();
+  
+  printValues();
 
-  if (timerPrinting.update())
-  {
-      printValues();
+  //if (timerPrinting.update())
+  //{
 
-  }
+  //}
 
   //Event handling from outer inputs like the manager
   checkEvents();
