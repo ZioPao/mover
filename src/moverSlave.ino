@@ -132,8 +132,8 @@ void checkEvents()
 void loop()
 {
   sAcc = imuManager.getAccelValues();
-
-  bluetoothLink.sendData(sAcc);
+  Serial.print(sAcc.x);
+  bluetoothLink.sendData(sAcc, VectorInt16(1,1,1));
 
   checkEvents();
 }

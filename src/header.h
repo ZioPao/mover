@@ -16,9 +16,19 @@
 //////////////////////////////////////////
 /*DEBUG*/
 #define ENABLE_IMU
-//#define DISABLE_BT_TEST
-#define DISABLE_MANAGER_CONNECTION
+//#define ENABLE_BT_TEST
+#define ENABLE_MANAGER_CONNECTION_TEST
 
 //////////////////////////////////////////
 /*RESET*/
 #define Reset_AVR() wdt_enable(WDTO_30MS); while(1) {} //definizione della funzione reset
+
+
+// addresses
+
+
+// CMODE 0
+// 9600 baud to test
+// Master = 98D3,21,F73BF2
+// Slave = 98D3,31,F98F5E
+

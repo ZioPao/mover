@@ -1,4 +1,5 @@
 #include "header.h"
+//#define MASTER
 
 //Setup variables
 bool isManagerConnectionEstabilished;
@@ -24,15 +25,20 @@ void setup()
     ; // wait for Leonardo enumeration, others continue immediately
 
   Serial.begin(115200);
-  Serial.println("MASTER");
 
+
+  #ifdef MASTER
+  Serial.println("MASTER");
+  #else
+  Serial.println("SLAVE");
+  #endif
   delay(100); //Await Serial connection... todo handshake
 
   //Await Serial connection... todo handshake
   isManagerConnectionEstabilished = false;
   isBluetoothConnectionEstabilished = false;
 
-#ifndef DISABLE_MANAGER_CONNECTION
+#ifdef ENABLE_MANAGER_CONNECTION_TEST
   Serial.println("Waiting connection with manager");
   while (!isManagerConnectionEstabilished)
   {
@@ -41,10 +47,7 @@ void setup()
   }
 #endif
 
-#ifdef DISABLE_BT_TEST
-  isBluetoothConnectionEstabilished = true;
-#endif
-
+#ifdef ENABLE_BT_TEST
   Serial.println("Waiting connection with other mover");
   // //BT test connection
    while (!isBluetoothConnectionEstabilished)
@@ -53,9 +56,10 @@ void setup()
    }
 
   Serial.println("Setup IMU");
+#endif
+
+
 #ifdef ENABLE_IMU
-
-
 // Sensor readings with offsets:   8       0       16382   1       0       1
 // Your offsets:   		-286    -315    1693    54      -49     -32
   imuManager.setup(-285, -315, 1693, 54, -49, -3);
@@ -96,47 +100,16 @@ void reset()
 //////////////////////////////////////////////////////////////////////////////////
 void printValues()
 {
+  
+  String acc_string = String(mAcc.x);
+  acc_string += ",";
+  acc_string += String(mAcc.y);
+  acc_string += ",";
+  acc_string += String(mAcc.z);
+  acc_string += ",";
 
-
-  // MAIN MOVER
-  String m_acc = "m ";
-
-  m_acc += String(mAcc.x);
-  m_acc += ",";
-  m_acc += String(mAcc.y);
-  m_acc += ",";
-  m_acc += String(mAcc.z);
-  m_acc += ",";
-
-  String m_gyr = String(mGyr.x);
-  m_gyr += ",";
-  m_gyr += String(mGyr.y);
-  m_gyr += ",";
-  m_gyr += String(mGyr.z);
-
-
-
-  String s_acc = " s ";
-  s_acc += String(sAcc.x);
-  s_acc += ",";
-  s_acc += String(sAcc.y);
-  s_acc += ",";
-  s_acc += String(sAcc.z);
-  s_acc += ",";
-
-  String s_gyr = String(sGyr.x);
-  s_gyr += ",";
-  s_gyr += String(sGyr.y);
-  s_gyr += ",";
-  s_gyr += String(sGyr.z);
-
-  s_gyr += " e";
-
-  String final_m_string = m_acc + m_gyr;
-  String final_s_string = s_acc + s_gyr;
-
-  //Serial.println(final_s_string);
-  //Serial.flush();
+  Serial.println(acc_string);
+  Serial.flush();
 
 }
 
@@ -159,7 +132,9 @@ void checkEvents()
 void loop()
 {
   mAcc = imuManager.getAccelValues();
-  sAcc = bluetoothLink.getData();
+
+  // todo something went wrong with bluetooth and I can't get it working again. So... USB for now
+  //bluetoothLink.getData(&sAcc, &sGyr);
   
   printValues();
 
