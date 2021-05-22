@@ -1,6 +1,7 @@
 
 //#define MASTER
 #include "SerialTransfer.h"
+#include "helper_3dmath.h"
 #ifdef MASTER
 
 
@@ -18,7 +19,7 @@ char arr[6];
 void setup()
 {
   Serial.begin(115200);
-  Serial1.begin(9600);
+  Serial1.begin(115200);
   myTransfer.begin(Serial1);
 }
 
@@ -27,20 +28,19 @@ void loop()
 {
 
 
-    Serial.print(Serial1.read());   
   if(myTransfer.available())
   {
     // use this variable to keep track of how many
     // bytes we've processed from the receive buffer
     uint16_t recSize = 0;
-
-    recSize = myTransfer.rxObj(testStruct, recSize);
-    Serial.print(testStruct.z);
-    Serial.print(testStruct.y);
+    VectorInt16 test;
+    recSize = myTransfer.rxObj(test, recSize);
+    Serial.print(test.x);
     Serial.print(" | ");
+    Serial.print(test.y);
 
-    recSize = myTransfer.rxObj(arr, recSize);
-    Serial.println(arr);
+    //recSize = myTransfer.rxObj(arr, recSize);
+    //Serial.println(arr);
   }
   else{
       // Serial.println("Waiting for data");
@@ -59,15 +59,16 @@ struct STRUCT {
 
 char arr[] = "hello";
 
-
+VectorInt16 t;
 void setup()
 {
   Serial.begin(115200);
-  Serial1.begin(9600);
+  Serial1.begin(115200);
   myTransfer.begin(Serial1);
 
   testStruct.z = '$';
   testStruct.y = 4.5;
+  t = VectorInt16(122, 212, 169);
 }
 
 
@@ -77,18 +78,16 @@ void loop()
   // bytes we're stuffing in the transmit buffer
   uint16_t sendSize = 0;
 
-  Serial1.write('testtesttest');
-    Serial.print("Writing");
 
   ///////////////////////////////////////// Stuff buffer with struct
- // sendSize = myTransfer.txObj(testStruct, sendSize);
+  sendSize = myTransfer.txObj(t, sendSize);
 
   ///////////////////////////////////////// Stuff buffer with array
   //sendSize = myTransfer.txObj(arr, sendSize);
-  //Serial.print(sendSize);
+  Serial.print(sendSize);
 
   ///////////////////////////////////////// Send buffer
- // myTransfer.sendData(sendSize);
+  myTransfer.sendData(sendSize);
   delay(500);
 }
 

@@ -1,10 +1,10 @@
-#include "bluetoothLink.h"
 #include "xinputMovement.h"
 #include "IMUManager.h"
 #include "helper_3dmath.h"
 #include <avr/io.h>
 #include <avr/wdt.h>
 #include "Wire.h"
+#include "SerialTransfer.h"
 
 //Timer utils is included in another header file (xinputMovement.h)
 
@@ -16,7 +16,6 @@
 //////////////////////////////////////////
 /*DEBUG*/
 #define ENABLE_IMU
-//#define ENABLE_BT_TEST
 #define ENABLE_MANAGER_CONNECTION_TEST
 
 //////////////////////////////////////////

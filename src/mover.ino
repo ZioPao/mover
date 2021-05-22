@@ -1,5 +1,6 @@
 #include "header.h"
-//#define MASTER
+
+#define MASTER
 
 //Setup variables
 bool isManagerConnectionEstabilished;
@@ -7,17 +8,21 @@ bool isBluetoothConnectionEstabilished;
 
 //Components
 XinputMovement xinputMovement;
-BluetoothLink bluetoothLink;
 IMUManager imuManager;
+
+//Bluetooth stuff
+SerialTransfer bluetooth_transfer;
 
 //Timer stuff
 MiniTimer timerPrinting;
 MiniTimer timerMovement;
 
 //Movement variables
-VectorInt16 mAcc, sAcc;
-VectorInt16 mGyr, sGyr;
+VectorInt16 acc;
 
+#ifdef MASTER
+VectorInt16 second_acc;
+#endif
 void setup()
 {
 
@@ -26,12 +31,11 @@ void setup()
 
   Serial.begin(115200);
 
-
-  #ifdef MASTER
+#ifdef MASTER
   Serial.println("MASTER");
-  #else
+#else
   Serial.println("SLAVE");
-  #endif
+#endif
   delay(100); //Await Serial connection... todo handshake
 
   //Await Serial connection... todo handshake
@@ -47,21 +51,11 @@ void setup()
   }
 #endif
 
-#ifdef ENABLE_BT_TEST
-  Serial.println("Waiting connection with other mover");
-  // //BT test connection
-   while (!isBluetoothConnectionEstabilished)
-   {
-     isBluetoothConnectionEstabilished = bluetoothLink.checkConnectionSlave();
-   }
-
-  Serial.println("Setup IMU");
-#endif
-
-
 #ifdef ENABLE_IMU
-// Sensor readings with offsets:   8       0       16382   1       0       1
-// Your offsets:   		-286    -315    1693    54      -49     -32
+  Serial.println("Setup IMU");
+
+  // Sensor readings with offsets:   8       0       16382   1       0       1
+  // Your offsets:   		-286    -315    1693    54      -49     -32
   imuManager.setup(-285, -315, 1693, 54, -49, -3);
 #endif
 
@@ -69,7 +63,15 @@ void setup()
   //Timer setup
   timerPrinting.setup(TIMER_PRINTING);
   timerMovement.setup(TIMER_MOVEMENT);
+
+  // Bluetooth setup
+
+  Serial1.begin(115200);
+  bluetooth_transfer.begin(Serial1);
+
+
 }
+
 
 void reset()
 {
@@ -98,19 +100,23 @@ void reset()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-void printValues()
+void printValues(VectorInt16 slave_acc)
 {
-  
-  String acc_string = String(mAcc.x);
+
+  String acc_string = String(acc.x);
   acc_string += ",";
-  acc_string += String(mAcc.y);
+  acc_string += String(acc.y);
   acc_string += ",";
-  acc_string += String(mAcc.z);
+  acc_string += String(acc.z);
+  acc_string += ",";
+  acc_string += String(slave_acc.x);
+  acc_string += ",";
+  acc_string += String(slave_acc.y);
+  acc_string += ",";
+  acc_string += String(slave_acc.z);
   acc_string += ",";
 
   Serial.println(acc_string);
-  Serial.flush();
-
 }
 
 void checkEvents()
@@ -131,12 +137,34 @@ void checkEvents()
 
 void loop()
 {
-  mAcc = imuManager.getAccelValues();
 
-  // todo something went wrong with bluetooth and I can't get it working again. So... USB for now
-  //bluetoothLink.getData(&sAcc, &sGyr);
-  
-  printValues();
+  acc = imuManager.getAccelValues();
+
+#ifdef MASTER
+
+  uint16_t received_data = 0;
+
+  if (bluetooth_transfer.available())
+  {
+    bluetooth_transfer.rxObj(second_acc, received_data);
+    
+  }
+
+  printValues(second_acc);
+
+#else
+
+  uint16_t sent_data = 0;
+  sent_data = bluetooth_transfer.txObj(acc, sent_data);
+  bluetooth_transfer.sendData(sent_data);
+  delay(50);
+
+
+#endif
+
+  //checkEvents();
+
+  //printValues();
 
   //if (timerPrinting.update())
   //{
@@ -144,6 +172,4 @@ void loop()
   //}
 
   //Event handling from outer inputs like the manager
-  checkEvents();
-
 }
