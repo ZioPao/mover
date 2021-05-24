@@ -17,7 +17,7 @@
 /*DEBUG*/
 #define ENABLE_IMU
 #define ENABLE_MANAGER_CONNECTION_TEST
-
+#define DEBUG_LED_PIN 6
 //////////////////////////////////////////
 /*RESET*/
 #define Reset_AVR() wdt_enable(WDTO_30MS); while(1) {} //definizione della funzione reset

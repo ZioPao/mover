@@ -70,6 +70,9 @@ void setup()
   bluetooth_transfer.begin(Serial1);
 
 
+  // Debug LEDs setup
+
+  pinMode(DEBUG_LED_PIN, OUTPUT);
 }
 
 
@@ -157,7 +160,9 @@ void loop()
   uint16_t sent_data = 0;
   sent_data = bluetooth_transfer.txObj(acc, sent_data);
   bluetooth_transfer.sendData(sent_data);
-  delay(50);
+  digitalWrite(DEBUG_LED_PIN, HIGH);
+  delay(500);
+  digitalWrite(DEBUG_LED_PIN, LOW);
 
 
 #endif

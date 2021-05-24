@@ -10,9 +10,9 @@
             "includePath": [
                 "C:/Users/aless/Documents/PlatformIO/Projects/mover/include",
                 "C:/Users/aless/Documents/PlatformIO/Projects/mover/src",
+                "C:/Program Files (x86)/Arduino/libraries/SerialTransfer",
                 "C:/Program Files (x86)/Arduino/libraries/MoverLibs",
                 "C:/Program Files (x86)/Arduino/libraries/ArduinoXInput-1.2.3/src",
-                "C:/Program Files (x86)/Arduino/libraries/SerialTransfer",
                 "C:/Users/aless/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 "C:/Users/aless/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                 "C:/Users/aless/.platformio/packages/framework-arduino-avr/cores/arduino",
@@ -50,9 +50,9 @@
                 "path": [
                     "C:/Users/aless/Documents/PlatformIO/Projects/mover/include",
                     "C:/Users/aless/Documents/PlatformIO/Projects/mover/src",
+                    "C:/Program Files (x86)/Arduino/libraries/SerialTransfer",
                     "C:/Program Files (x86)/Arduino/libraries/MoverLibs",
                     "C:/Program Files (x86)/Arduino/libraries/ArduinoXInput-1.2.3/src",
-                    "C:/Program Files (x86)/Arduino/libraries/SerialTransfer",
                     "C:/Users/aless/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     "C:/Users/aless/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                     "C:/Users/aless/.platformio/packages/framework-arduino-avr/cores/arduino",
