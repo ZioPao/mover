@@ -1,6 +1,6 @@
 #include "header.h"
 
-#define MASTER
+//#define MASTER
 
 //Setup variables
 bool isManagerConnectionEstabilished;
@@ -23,6 +23,8 @@ VectorInt16 acc;
 #ifdef MASTER
 VectorInt16 second_acc;
 #endif
+
+
 void setup()
 {
 
@@ -69,12 +71,10 @@ void setup()
   Serial1.begin(115200);
   bluetooth_transfer.begin(Serial1);
 
-
   // Debug LEDs setup
 
   pinMode(DEBUG_LED_PIN, OUTPUT);
 }
-
 
 void reset()
 {
@@ -102,26 +102,6 @@ void reset()
   timerMovement.setup(TIMER_MOVEMENT);
 }
 
-//////////////////////////////////////////////////////////////////////////////////
-void printValues(VectorInt16 slave_acc)
-{
-
-  String acc_string = String(acc.x);
-  acc_string += ",";
-  acc_string += String(acc.y);
-  acc_string += ",";
-  acc_string += String(acc.z);
-  acc_string += ",";
-  acc_string += String(slave_acc.x);
-  acc_string += ",";
-  acc_string += String(slave_acc.y);
-  acc_string += ",";
-  acc_string += String(slave_acc.z);
-  acc_string += ",";
-
-  Serial.println(acc_string);
-}
-
 void checkEvents()
 {
 
@@ -136,6 +116,56 @@ void checkEvents()
     break;
   }
 }
+
+#ifdef MASTER
+//////////////////////////////////////////////////////////////////////////////////
+// MASTER ONLY
+//////////////////////////////////////////////////////////////////////////////////
+void printValues()
+{
+
+  String acc_string = String(acc.x);
+  acc_string += ",";
+  acc_string += String(acc.y);
+  acc_string += ",";
+  acc_string += String(acc.z);
+  acc_string += ",";
+  acc_string += String(second_acc.x);
+  acc_string += ",";
+  acc_string += String(second_acc.y);
+  acc_string += ",";
+  acc_string += String(second_acc.z);
+  acc_string += ",";
+
+  Serial.println(acc_string);
+}
+
+void receiveData()
+{
+  uint16_t received_data = 0;
+
+  if (bluetooth_transfer.available())
+  {
+    bluetooth_transfer.rxObj(second_acc, received_data);
+  }
+}
+#else
+//////////////////////////////////////////////////////////////////////////////////
+// SLAVE ONLY
+//////////////////////////////////////////////////////////////////////////////////
+void sendData(){
+  
+  uint16_t sent_data = 0;
+  sent_data = bluetooth_transfer.txObj(acc, sent_data);
+  bluetooth_transfer.sendData(sent_data);
+  digitalWrite(DEBUG_LED_PIN, HIGH);
+  delay(500);
+  digitalWrite(DEBUG_LED_PIN, LOW);
+}
+
+
+#endif
+
 //////////////////////////////////////////////////////////////////////////////////
 
 void loop()
@@ -144,37 +174,13 @@ void loop()
   acc = imuManager.getAccelValues();
 
 #ifdef MASTER
-
-  uint16_t received_data = 0;
-
-  if (bluetooth_transfer.available())
-  {
-    bluetooth_transfer.rxObj(second_acc, received_data);
-    
-  }
-
-  printValues(second_acc);
+  receiveData();
+  printValues();
 
 #else
-
-  uint16_t sent_data = 0;
-  sent_data = bluetooth_transfer.txObj(acc, sent_data);
-  bluetooth_transfer.sendData(sent_data);
-  digitalWrite(DEBUG_LED_PIN, HIGH);
-  delay(500);
-  digitalWrite(DEBUG_LED_PIN, LOW);
-
+  sendData();
 
 #endif
 
-  //checkEvents();
-
-  //printValues();
-
-  //if (timerPrinting.update())
-  //{
-
-  //}
-
-  //Event handling from outer inputs like the manager
+  checkEvents();
 }
