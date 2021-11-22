@@ -29,6 +29,16 @@
             "projectEnvName": "leonardo",
             "toolchainBinDir": "C:/Users/aless/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug (without uploading)",
+            "executable": "C:/Users/aless/Documents/PlatformIO/Projects/mover/.pio/build/leonardo/firmware.elf",
+            "projectEnvName": "leonardo",
+            "toolchainBinDir": "C:/Users/aless/.platformio/packages/toolchain-atmelavr/bin",
+            "internalConsoleOptions": "openOnSessionStart",
+            "loadMode": "manual"
         }
     ]
 }

@@ -5,6 +5,7 @@
 #include <avr/wdt.h>
 #include "Wire.h"
 #include "SerialTransfer.h"
+#include "Kalman.h"
 
 //Timer utils is included in another header file (xinputMovement.h)
 
@@ -16,7 +17,7 @@
 //////////////////////////////////////////
 /*DEBUG*/
 #define ENABLE_IMU
-#define ENABLE_MANAGER_CONNECTION_TEST
+//#define ENABLE_MANAGER_CONNECTION_TEST
 #define DEBUG_LED_PIN 6
 //////////////////////////////////////////
 /*RESET*/
@@ -24,7 +25,6 @@
 
 
 // addresses
-
 
 // CMODE 0
 // 9600 baud to test

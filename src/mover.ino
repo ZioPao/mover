@@ -1,6 +1,6 @@
 #include "header.h"
 
-//#define MASTER
+#define LEFT
 
 //Setup variables
 bool isManagerConnectionEstabilished;
@@ -19,9 +19,23 @@ MiniTimer timerMovement;
 
 //Movement variables
 VectorInt16 acc;
+//Vector2Float gyr;
 
 #ifdef MASTER
+
+//#define DEBUG_MASTER
 VectorInt16 second_acc;
+Vector2Float second_gyr;
+
+float x_filter_old = 0;
+float x_og_old = 0;
+
+float y_filter_old = 0;
+float y_og_old = 0;
+
+float z_filter_old = 0;
+float z_og_old = 0;
+
 #endif
 
 
@@ -33,10 +47,10 @@ void setup()
 
   Serial.begin(115200);
 
-#ifdef MASTER
-  Serial.println("MASTER");
+#ifdef LEFT
+  Serial.println("LEFT");
 #else
-  Serial.println("SLAVE");
+  Serial.println("RIGHT");
 #endif
   delay(100); //Await Serial connection... todo handshake
 
@@ -68,9 +82,9 @@ void setup()
 
   // Bluetooth setup
 
-  Serial1.begin(115200);
-  bluetooth_transfer.begin(Serial1);
-
+  //Serial1.begin(115200);
+  //bluetooth_transfer.begin(Serial1, true);
+  
   // Debug LEDs setup
 
   pinMode(DEBUG_LED_PIN, OUTPUT);
@@ -117,70 +131,74 @@ void checkEvents()
   }
 }
 
-#ifdef MASTER
+
 //////////////////////////////////////////////////////////////////////////////////
 // MASTER ONLY
 //////////////////////////////////////////////////////////////////////////////////
 void printValues()
 {
 
-  String acc_string = String(acc.x);
-  acc_string += ",";
-  acc_string += String(acc.y);
-  acc_string += ",";
-  acc_string += String(acc.z);
-  acc_string += ",";
-  acc_string += String(second_acc.x);
-  acc_string += ",";
-  acc_string += String(second_acc.y);
-  acc_string += ",";
-  acc_string += String(second_acc.z);
-  acc_string += ",";
+  //filtering
+  //a[1] \times yfilt[i-1] + b[0]
+  //float x_filter = 0.9601172921934632 * x_filter_old + 0.019941353903268455 * acc.x + 0.019941353903268566 * x_og_old;
 
-  Serial.println(acc_string);
+  /// X FILTERING
+
+  //float b[] = {0.00066048, 0.00132097, 0.00066048};
+  //float a[] = {1.92600086, -0.92864279};
+
+
+  //float x_filter = 0.9601172921934632 * x_filter_old + 0.019941353903268455 * acc.x + 0.019941353903268566 * x_og_old;
+  //x_filter_old = x_filter;
+  //x_og_old = acc.x;
+
+
+  // Y FILTERING
+  //float y_filter = 0.9601172921934632 * y_filter_old + 0.019941353903268455 * acc.y + 0.019941353903268566 * y_og_old;
+  //y_filter_old = y_filter;
+  //y_og_old = acc.y;
+
+
+  // Z FILTERING
+  //float z_filter = 0.9601172921934632 * z_filter_old + 0.019941353903268455 * acc.z + 0.019941353903268566 * z_og_old;
+  //z_filter_old = z_filter;
+  //z_og_old = acc.z;
+
+
+  // TEST ONLY ACCELEROMETERS
+  #ifdef LEFT
+  String printed_string = "l,";
+  #else
+  String printed_string = "r,";
+  #endif
+  printed_string += String(acc.x);    
+  printed_string += ",";
+  printed_string += String(acc.y);
+  printed_string += ",";
+  printed_string += String(acc.z);
+  printed_string += ",";
+  printed_string += String(millis());
+  Serial.println(printed_string);
+
 }
 
-void receiveData()
-{
-  uint16_t received_data = 0;
-
-  if (bluetooth_transfer.available())
-  {
-    bluetooth_transfer.rxObj(second_acc, received_data);
-  }
-}
-#else
-//////////////////////////////////////////////////////////////////////////////////
-// SLAVE ONLY
-//////////////////////////////////////////////////////////////////////////////////
-void sendData(){
-  
-  uint16_t sent_data = 0;
-  sent_data = bluetooth_transfer.txObj(acc, sent_data);
-  bluetooth_transfer.sendData(sent_data);
-  digitalWrite(DEBUG_LED_PIN, HIGH);
-  delay(500);
-  digitalWrite(DEBUG_LED_PIN, LOW);
-}
-
-
-#endif
 
 //////////////////////////////////////////////////////////////////////////////////
 
 void loop()
 {
 
-  acc = imuManager.getAccelValues();
+  imuManager.updateValues();
+  acc = imuManager.getAcceleration();
+  //gyr = imuManager.getPitchRoll();
 
-#ifdef MASTER
-  receiveData();
+  //receiveData(&second_acc);
   printValues();
 
-#else
-  sendData();
 
-#endif
+  //sendData();
+
 
   checkEvents();
+
 }
