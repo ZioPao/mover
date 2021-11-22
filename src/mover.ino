@@ -1,6 +1,6 @@
 #include "header.h"
 
-//#define LEFT
+#define LEFT
 
 //Setup variables
 bool isManagerConnectionEstabilished;
@@ -19,7 +19,7 @@ MiniTimer timerMovement;
 
 //Movement variables
 VectorInt16 acc;
-Vector2Float gyr;
+//Vector2Float gyr;
 
 #ifdef MASTER
 
