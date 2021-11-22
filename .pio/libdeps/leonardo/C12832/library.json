@@ -3,6 +3,9 @@
         "name": "Kevin Anderson",
         "url": "https://os.mbed.com/users/askksa12543/"
     },
+    "build": {
+        "builder": "MbedLibBuilder"
+    },
     "description": "lcd for LPC1768",
     "examples": [
         "https://os.mbed.com/users/CBMalloch/code/exercise_application_shield/",

@@ -3,6 +3,9 @@
         "name": "Erik -",
         "url": "https://os.mbed.com/users/Sissors/"
     },
+    "build": {
+        "builder": "MbedLibBuilder"
+    },
     "description": "Library for the MMA7660 triple axis accelerometer",
     "examples": [
         "https://os.mbed.com/users/samux/code/Websocket_Ethernet_acc/",

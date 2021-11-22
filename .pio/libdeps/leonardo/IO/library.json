@@ -3,6 +3,9 @@
         "name": "Axel Payan",
         "url": "https://os.mbed.com/users/co838_app56/"
     },
+    "build": {
+        "builder": "MbedLibBuilder"
+    },
     "dependencies": [
         {
             "authors": "Kevin Anderson",

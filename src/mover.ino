@@ -21,24 +21,6 @@ MiniTimer timerMovement;
 VectorInt16 acc;
 //Vector2Float gyr;
 
-#ifdef MASTER
-
-//#define DEBUG_MASTER
-VectorInt16 second_acc;
-Vector2Float second_gyr;
-
-float x_filter_old = 0;
-float x_og_old = 0;
-
-float y_filter_old = 0;
-float y_og_old = 0;
-
-float z_filter_old = 0;
-float z_og_old = 0;
-
-#endif
-
-
 void setup()
 {
 
@@ -131,10 +113,6 @@ void checkEvents()
   }
 }
 
-
-//////////////////////////////////////////////////////////////////////////////////
-// MASTER ONLY
-//////////////////////////////////////////////////////////////////////////////////
 void printValues()
 {
 

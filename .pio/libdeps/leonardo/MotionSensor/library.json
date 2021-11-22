@@ -3,6 +3,9 @@
         "name": "weeb grammers",
         "url": "https://os.mbed.com/users/weebgrammers/"
     },
+    "build": {
+        "builder": "MbedLibBuilder"
+    },
     "dependencies": [
         {
             "authors": "",

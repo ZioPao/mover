@@ -3,6 +3,9 @@
         "name": "Jim Carver",
         "url": "https://os.mbed.com/users/JimCarver/"
     },
+    "build": {
+        "builder": "MbedLibBuilder"
+    },
     "dependencies": [
         {
             "authors": "",
