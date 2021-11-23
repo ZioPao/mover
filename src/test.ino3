@@ -1,0 +1,11 @@
+#include "IMUManager.h"
+
+void setup(){
+    Serial.print("OK)");
+}
+
+void loop(){
+    Serial.print("T");
+    IMUManager x;
+    x.setup();
+}

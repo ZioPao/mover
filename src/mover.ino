@@ -1,25 +1,20 @@
 #include "header.h"
 
-#define LEFT
+//#define LEFT
 
 //Setup variables
 bool isManagerConnectionEstabilished;
 bool isBluetoothConnectionEstabilished;
 
 //Components
-XinputMovement xinputMovement;
 IMUManager imuManager;
-
-//Bluetooth stuff
-SerialTransfer bluetooth_transfer;
 
 //Timer stuff
 MiniTimer timerPrinting;
 MiniTimer timerMovement;
 
 //Movement variables
-VectorInt16 acc;
-//Vector2Float gyr;
+VectorInt16 values;
 
 void setup()
 {
@@ -149,11 +144,11 @@ void printValues()
   #else
   String printed_string = "r,";
   #endif
-  printed_string += String(acc.x);    
+  printed_string += String(values.x);    
   printed_string += ",";
-  printed_string += String(acc.y);
+  printed_string += String(values.y);
   printed_string += ",";
-  printed_string += String(acc.z);
+  printed_string += String(values.z);
   printed_string += ",";
   printed_string += String(millis());
   Serial.println(printed_string);
@@ -166,8 +161,7 @@ void printValues()
 void loop()
 {
 
-  imuManager.updateValues();
-  acc = imuManager.getAcceleration();
+  values = imuManager.getValues();
   //gyr = imuManager.getPitchRoll();
 
   //receiveData(&second_acc);

@@ -1,11 +1,12 @@
 #include "I2Cdev.h"
-#include "MPU6050.h"
+#include "MPU6050_6Axis_MotionApps20.h"
 #include "Wire.h"
 
-
+//#define IMU_DEBUG
 #define INTERRUPT_PIN 7
 
-//#define IMU_DEBUG
+
+
 class IMUManager
 {
 private:
@@ -29,14 +30,10 @@ private:
 public:
 
     void setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z_offset, int16_t gyr_x_offset, int16_t gyr_y_offset, int16_t gyr_z_offset);
-    void updateValues();
+    VectorInt16 getValues();
 
     void setDmpReady(bool value);
-
-
     MPU6050 getMPU();
-    Vector2Float getPitchRoll();
-    VectorInt16 getAcceleration();
 };
     
-    void dmpDataReady();
+void dmpDataReady();

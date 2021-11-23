@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.ino": "cpp",
+        "*.fx": "hlsl",
+        "*.ino2": "cpp"
+    }
+}

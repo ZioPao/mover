@@ -67,28 +67,32 @@ void IMUManager::setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z
 
 }
 
-void IMUManager::updateValues()
-{
-
-    if (!dmpReady)
+VectorInt16 IMUManager::getValues()
+{   
+    if (dmpReady == false){
         return;
-
-    if (mpu.dmpGetCurrentFIFOPacket(fifoBuffer))
-    {
-            mpu.dmpGetQuaternion(&q, fifoBuffer);
-            mpu.dmpGetAccel(&aa, fifoBuffer);
-            mpu.dmpGetGravity(&gravity, &q);
-            mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-            mpu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-            mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
-
-        //gyr -> x = ypr[0];
-        //gyr -> y = ypr[1];
-        //gyr -> z = ypr[2];
-
-
-        //mpu.getMotion6(&acc->x, &acc->y, &acc->z, &gyr->x, &gyr->y, &gyr->z);
     }
+    int16_t ax, ay, az, gx, gy, gz;
+
+    mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+    VectorInt16 temp;
+
+    if (mpu.getIntMotionStatus()){
+
+        temp.x = gx;
+        temp.y = gy;
+        temp.z = gz;
+
+    }
+    else{
+        temp.x = 0;         //automatically goes down or automatic filtering?
+        temp.y = 0;
+        temp.z = 0;
+    }
+
+
+    return temp;
+
 }
 
 void IMUManager::setDmpReady(bool value)
@@ -98,19 +102,4 @@ void IMUManager::setDmpReady(bool value)
 
 MPU6050 IMUManager::getMPU(){
     return this -> mpu;
-}
-
-Vector2Float IMUManager::getPitchRoll(){
-
-
-    Vector2Float tmp;
-    //tmp.x = ypr[0] * 180 / M_PI;
-    tmp.y = ypr[1] * 180 / M_PI;
-    tmp.z = ypr[2] * 180 / M_PI;
-
-    return tmp;
-}
-
-VectorInt16 IMUManager::getAcceleration(){
-    return aaWorld;
 }
