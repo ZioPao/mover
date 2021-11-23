@@ -13,30 +13,21 @@ void dmpDataReady() {
 // ================================================================
 void IMUManager::setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z_offset, int16_t gyr_x_offset, int16_t gyr_y_offset, int16_t gyr_z_offset)
 {
-    // join I2C bus (I2Cdev library doesn't do this automatically)
-#if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
     Wire.begin();
-    Wire.setWireTimeout(3000,true); 
-	Wire.clearWireTimeoutFlag();
-    Wire.setClock(400000); // 400kHz I2C clock. Comment this line if having compilation difficulties
-#elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
-    Fastwire::setup(400, true);
-#endif
-
-    // initialize device
-    Serial.println("Initializing I2C devices...");
+    Serial.begin(115200);
     mpu.initialize();
-    pinMode(INTERRUPT_PIN, INPUT);
 
-    
-    // verify connection
-    Serial.println("Testing device connections...");
+    mpu.setAccelerometerPowerOnDelay(3);
+    mpu.setIntZeroMotionEnabled(0);
+    mpu.setDHPFMode(1);
+    mpu.setMotionDetectionThreshold(2);
+    mpu.setZeroMotionDetectionThreshold(1);
+    mpu.setMotionDetectionDuration(5);
+    mpu.setZeroMotionDetectionDuration(1);	
+
     Serial.println(mpu.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
-
-    // Manage dmp
     uint8_t dmpStatus = mpu.dmpInitialize();
 
-    // dmp correctly initialized
     if (dmpStatus == 0)
     {
         // offsets
@@ -52,19 +43,13 @@ void IMUManager::setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z
         mpu.CalibrateAccel(12);
         mpu.CalibrateGyro(12);
 
+
         mpu.setDMPEnabled(true);
         attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), dmpDataReady, RISING);
         mpuIntStatus = mpu.getIntStatus();
-
-        dmpReady = true;
         packetSize = mpu.dmpGetFIFOPacketSize();
-    }
-    else
-    {
-        Serial.print("Error initializing!!!");
-    }
     
-
+    }
 }
 
 VectorInt16 IMUManager::getValues()
