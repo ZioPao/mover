@@ -14,7 +14,7 @@ MiniTimer timerPrinting;
 MiniTimer timerMovement;
 
 //Movement variables
-VectorInt16 values;
+VectorFloat values;
 
 void setup()
 {
@@ -22,7 +22,7 @@ void setup()
   while (!Serial)
     ; // wait for Leonardo enumeration, others continue immediately
 
-  Serial.begin(115200);
+  Serial.begin(38400);
 
 #ifdef LEFT
   Serial.println("LEFT");
@@ -50,6 +50,9 @@ void setup()
   // Sensor readings with offsets:   8       0       16382   1       0       1
   // Your offsets:   		-286    -315    1693    54      -49     -32
   imuManager.setup(-285, -315, 1693, 54, -49, -3);
+  values.x = 0;
+  values.y = 0;
+  values.z = 0;
 #endif
 
   Serial.println("Setup timers");
@@ -138,20 +141,24 @@ void printValues()
   //z_og_old = acc.z;
 
 
-  // TEST ONLY ACCELEROMETERS
-  #ifdef LEFT
-  String printed_string = "l,";
-  #else
-  String printed_string = "r,";
-  #endif
-  printed_string += String(values.x);    
-  printed_string += ",";
-  printed_string += String(values.y);
-  printed_string += ",";
-  printed_string += String(values.z);
-  printed_string += ",";
-  printed_string += String(millis());
-  Serial.println(printed_string);
+  if (values.x != 0){
+    // TEST ONLY ACCELEROMETERS
+    #ifdef LEFT
+    String printed_string = "l,";
+    #else
+    String printed_string = "r,";
+    #endif
+    printed_string += String(values.x);    
+    printed_string += ",";
+    printed_string += String(values.y);
+    printed_string += ",";
+    printed_string += String(values.z);
+    printed_string += ",";
+    printed_string += String(millis());
+    Serial.println(printed_string);
+  }
+
+ 
 
 }
 
@@ -162,15 +169,9 @@ void loop()
 {
 
   values = imuManager.getValues();
-  //gyr = imuManager.getPitchRoll();
-
-  //receiveData(&second_acc);
   printValues();
+  //checkEvents();
+  
 
-
-  //sendData();
-
-
-  checkEvents();
 
 }

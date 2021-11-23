@@ -10,7 +10,7 @@
             "includePath": [
                 "C:/Users/aless/Documents/PlatformIO/Projects/mover/include",
                 "C:/Users/aless/Documents/PlatformIO/Projects/mover/src",
-                "C:/Program Files (x86)/Arduino/libraries/SerialTransfer",
+                "C:/Users/aless/Documents/PlatformIO/Projects/mover/lib/MoverLibs",
                 "C:/Program Files (x86)/Arduino/libraries/MPU6050",
                 "C:/Program Files (x86)/Arduino/libraries/I2Cdev",
                 "C:/Users/aless/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
@@ -33,6 +33,7 @@
                 "C:/Program Files (x86)/Arduino/libraries/Robot_Control/src",
                 "C:/Program Files (x86)/Arduino/libraries/Robot_Motor/src",
                 "C:/Program Files (x86)/Arduino/libraries/SD/src",
+                "C:/Program Files (x86)/Arduino/libraries/SerialTransfer",
                 "C:/Program Files (x86)/Arduino/libraries/Servo/src",
                 "C:/Program Files (x86)/Arduino/libraries/SpacebrewYun/src",
                 "C:/Program Files (x86)/Arduino/libraries/Stepper/src",
@@ -43,15 +44,14 @@
                 "C:/Users/aless/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                 "C:/Users/aless/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
                 "C:/Users/aless/.platformio/packages/tool-unity",
-                "",
-                "${workspaceFolder}/lib/MoverLibs"
+                ""
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
                     "C:/Users/aless/Documents/PlatformIO/Projects/mover/include",
                     "C:/Users/aless/Documents/PlatformIO/Projects/mover/src",
-                    "C:/Program Files (x86)/Arduino/libraries/SerialTransfer",
+                    "C:/Users/aless/Documents/PlatformIO/Projects/mover/lib/MoverLibs",
                     "C:/Program Files (x86)/Arduino/libraries/MPU6050",
                     "C:/Program Files (x86)/Arduino/libraries/I2Cdev",
                     "C:/Users/aless/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
@@ -74,6 +74,7 @@
                     "C:/Program Files (x86)/Arduino/libraries/Robot_Control/src",
                     "C:/Program Files (x86)/Arduino/libraries/Robot_Motor/src",
                     "C:/Program Files (x86)/Arduino/libraries/SD/src",
+                    "C:/Program Files (x86)/Arduino/libraries/SerialTransfer",
                     "C:/Program Files (x86)/Arduino/libraries/Servo/src",
                     "C:/Program Files (x86)/Arduino/libraries/SpacebrewYun/src",
                     "C:/Program Files (x86)/Arduino/libraries/Stepper/src",

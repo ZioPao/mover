@@ -30,7 +30,7 @@ private:
 public:
 
     void setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z_offset, int16_t gyr_x_offset, int16_t gyr_y_offset, int16_t gyr_z_offset);
-    VectorInt16 getValues();
+    VectorFloat getValues();
 
     void setDmpReady(bool value);
     MPU6050 getMPU();

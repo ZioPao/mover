@@ -59,157 +59,25 @@ void setup() {
     Wire.begin();
     Serial.begin(115200);
     accelgyro.initialize();
-    //Set up zero motion
-	
-    /** Get accelerometer power-on delay.
-    * The accelerometer data path provides samples to the sensor registers, Motion
-    * detection, Zero Motion detection, and Free Fall detection modules. The
-    * signal path contains filters which must be flushed on wake-up with new
-    * samples before the detection modules begin operations. The default wake-up
-    * delay, of 4ms can be lengthened by up to 3ms. This additional delay is
-    * specified in ACCEL_ON_DELAY in units of 1 LSB = 1 ms. The user may select
-    * any value above zero unless instructed otherwise by InvenSense. Please refer
-    * to Section 8 of the MPU-6000/MPU-6050 Product Specification document for
-    * further information regarding the detection modules.
-    * @return Current accelerometer power-on delay
-    * @see MPU60X0_RA_MOT_DETECT_CTRL
-    * @see MPU60X0_DETECT_ACCEL_ON_DELAY_BIT
-    */	
+   
     accelgyro.setAccelerometerPowerOnDelay(3);
 	
 
-    /** Get Zero Motion Detection interrupt enabled status.
-    * Will be set 0 for disabled, 1 for enabled.
-    * @return Current interrupt enabled status
-    * @see MPU60X0_RA_INT_ENABLE
-    * @see MPU60X0_INTERRUPT_ZMOT_BIT
-    **/	
     accelgyro.setIntZeroMotionEnabled(TurnOnZI);
 	
 
-    /** Get the high-pass filter configuration.
-    * The DHPF is a filter module in the path leading to motion detectors (Free
-    * Fall, Motion threshold, and Zero Motion). The high pass filter output is not
-    * available to the data registers (see Figure in Section 8 of the MPU-6000/
-    * MPU-6050 Product Specification document).
-    * 
-    * The high pass filter has three modes:
-    *    Reset: The filter output settles to zero within one sample. This
-    *           effectively disables the high pass filter. This mode may be toggled
-    *           to quickly settle the filter.
-    *
-    *    On:    The high pass filter will pass signals above the cut off frequency.
-    *
-    *    Hold:  When triggered, the filter holds the present sample. The filter
-    *           output will be the difference between the input sample and the held
-    *           sample.
-    *
-    * ACCEL_HPF | Filter Mode | Cut-off Frequency
-    * ----------+-------------+------------------
-    * 0         | Reset       | None
-    * 1         | On          | 5Hz
-    * 2         | On          | 2.5Hz
-    * 3         | On          | 1.25Hz
-    * 4         | On          | 0.63Hz
-    * 7         | Hold        | None
-    * </pre>
-    * 
-    * @return Current high-pass filter configuration
-    * @see MPU60X0_DHPF_RESET
-    * @see MPU60X0_RA_ACCEL_CONFIG
-    */	
-    //DEBUG_PRINTLN("Setting DHPF bandwidth to 5Hz...");
     accelgyro.setDHPFMode(1);
 
 	
-    /** Get motion detection event acceleration threshold.
-    * This register configures the detection threshold for Motion interrupt
-    * generation. The unit of MOT_THR is 1LSB = 2mg. Motion is detected when the
-    * absolute value of any of the accelerometer measurements exceeds this Motion
-    * detection threshold. This condition increments the Motion detection duration
-    * counter (Register 32). The Motion detection interrupt is triggered when the
-    * Motion Detection counter reaches the time count specified in MOT_DUR
-    * (Register 32).
-    * 
-    * The Motion interrupt will indicate the axis and polarity of detected motion
-    * in MOT_DETECT_STATUS (Register 97).
-    * 
-    * For more details on the Motion detection interrupt, see Section 8.3 of the
-    * MPU-6000/MPU-6050 Product Specification document as well as Registers 56 and
-    * 58 of this document.
-    *
-    * @return Current motion detection acceleration threshold value (LSB = 2mg)
-    * @see MPU60X0_RA_MOT_THR
-    */	
-    //Serial.println("Setting motion detection threshold to 2...");
     accelgyro.setMotionDetectionThreshold(2);
 
 
-    /** Get zero motion detection event acceleration threshold.
-    * This register configures the detection threshold for Zero Motion interrupt
-    * generation. The unit of ZRMOT_THR is 1LSB = 2mg. Zero Motion is detected when
-    * the absolute value of the accelerometer measurements for the 3 axes are each
-    * less than the detection threshold. This condition increments the Zero Motion
-    * duration counter (Register 34). The Zero Motion interrupt is triggered when
-    * the Zero Motion duration counter reaches the time count specified in
-    * ZRMOT_DUR (Register 34).
-    * 
-    * Unlike Free Fall or Motion detection, Zero Motion detection triggers an
-    * interrupt both when Zero Motion is first detected and when Zero Motion is no
-    * longer detected.
-    * 
-    * When a zero motion event is detected, a Zero Motion Status will be indicated
-    * in the MOT_DETECT_STATUS register (Register 97). When a motion-to-zero-motion
-    * condition is detected, the status bit is set to 1. When a zero-motion-to-
-    * motion condition is detected, the status bit is set to 0.
-    * 
-    * For more details on the Zero Motion detection interrupt, see Section 8.4 of
-    * the MPU-6000/MPU-6050 Product Specification document as well as Registers 56
-    * and 58 of this document.
-    * 
-    * @return Current zero motion detection acceleration threshold value (LSB = 2mg)
-    * @see MPU60X0_RA_ZRMOT_THR
-    */	
-    //Serial.println("Setting zero-motion detection threshold to 156...");
     accelgyro.setZeroMotionDetectionThreshold(1);
 
 
-    /** Get motion detection event duration threshold.
-    * This register configures the duration counter threshold for Motion interrupt
-    * generation. The duration counter ticks at 1 kHz, therefore MOT_DUR has a unit
-    * of 1LSB = 1ms. The Motion detection duration counter increments when the
-    * absolute value of any of the accelerometer measurements exceeds the Motion
-    * detection threshold (Register 31). The Motion detection interrupt is
-    * triggered when the Motion detection counter reaches the time count specified
-    * in this register.
-    * 
-    * For more details on the Motion detection interrupt, see Section 8.3 of the
-    * MPU-6000/MPU-6050 Product Specification document.
-    * 
-    * @return Current motion detection duration threshold value (LSB = 1ms)
-    * @see MPU60X0_RA_MOT_DUR
-    */
-    //Serial.println("Setting motion detection duration to 80...");
     accelgyro.setMotionDetectionDuration(5);
 
 
-    /** Get zero motion detection event duration threshold.
-    * This register configures the duration counter threshold for Zero Motion
-    * interrupt generation. The duration counter ticks at 16 Hz, therefore
-    * ZRMOT_DUR has a unit of 1 LSB = 64 ms. The Zero Motion duration counter
-    * increments while the absolute value of the accelerometer measurements are
-    * each less than the detection threshold (Register 33). The Zero Motion
-    * interrupt is triggered when the Zero Motion duration counter reaches the time
-    * count specified in this register.
-    * 
-    * For more details on the Zero Motion detection interrupt, see Section 8.4 of
-    * the MPU-6000/MPU-6050 Product Specification document, as well as Registers 56
-    * and 58 of this document.
-    * 
-    * @return Current zero motion detection duration threshold value (LSB = 64ms)
-    * @see MPU60X0_RA_ZRMOT_DUR
-    */	
-    //Serial.println("Setting zero-motion detection duration to 0...");
     accelgyro.setZeroMotionDetectionDuration(1);	
 	
 

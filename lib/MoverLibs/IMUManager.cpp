@@ -14,60 +14,49 @@ void dmpDataReady() {
 void IMUManager::setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z_offset, int16_t gyr_x_offset, int16_t gyr_y_offset, int16_t gyr_z_offset)
 {
     Wire.begin();
-    Serial.begin(115200);
+    Serial.begin(9600);
     mpu.initialize();
-
-    mpu.setAccelerometerPowerOnDelay(3);
-    mpu.setIntZeroMotionEnabled(0);
-    mpu.setDHPFMode(1);
-    mpu.setMotionDetectionThreshold(2);
-    mpu.setZeroMotionDetectionThreshold(1);
-    mpu.setMotionDetectionDuration(5);
-    mpu.setZeroMotionDetectionDuration(1);	
-
-    Serial.println(mpu.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
-    uint8_t dmpStatus = mpu.dmpInitialize();
-
-    if (dmpStatus == 0)
-    {
-        // offsets
-        mpu.setXAccelOffset(acc_x_offset);
-        mpu.setYAccelOffset(acc_y_offset);
-        mpu.setZAccelOffset(acc_z_offset);
-
-        mpu.setXGyroOffset(gyr_x_offset);
-        mpu.setYGyroOffset(gyr_y_offset);
-        mpu.setZGyroOffset(gyr_z_offset);
-
-        // Calibration Time: generate offsets and calibrate our MPU6050
-        mpu.CalibrateAccel(12);
-        mpu.CalibrateGyro(12);
-
-
-        mpu.setDMPEnabled(true);
-        attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), dmpDataReady, RISING);
-        mpuIntStatus = mpu.getIntStatus();
-        packetSize = mpu.dmpGetFIFOPacketSize();
     
-    }
+    mpu.setDHPFMode(1);
+    mpu.setAccelerometerPowerOnDelay(3);
+    mpu.setIntFreefallEnabled(false);
+    mpu.setIntZeroMotionEnabled(true);
+    mpu.setIntMotionEnabled(true);
+
+    mpu.setMotionDetectionThreshold(1);
+    mpu.setFreefallDetectionThreshold(1);
+    mpu.setZeroMotionDetectionThreshold(2.2);     //1
+
+    mpu.setMotionDetectionDuration(1);
+    mpu.setFreefallDetectionDuration(1);
+    mpu.setZeroMotionDetectionDuration(1);	    //1
+
+    //Serial.println(mpu.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+    //uint8_t dmpStatus = mpu.dmpInitialize();
+    mpu.setXAccelOffset(acc_x_offset);
+    mpu.setYAccelOffset(acc_y_offset);
+    mpu.setZAccelOffset(acc_z_offset);
+
+    mpu.setXGyroOffset(gyr_x_offset);
+    mpu.setYGyroOffset(gyr_y_offset);
+    mpu.setZGyroOffset(gyr_z_offset);
+
+    // Calibration Time: generate offsets and calibrate our MPU6050
+    mpu.CalibrateAccel(2);
+    mpu.CalibrateGyro(2);
+   
 }
 
-VectorInt16 IMUManager::getValues()
+VectorFloat IMUManager::getValues()
 {   
-    if (dmpReady == false){
-        return;
-    }
+
     int16_t ax, ay, az, gx, gy, gz;
-
     mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-    VectorInt16 temp;
-
-    if (mpu.getIntMotionStatus()){
-
-        temp.x = gx;
-        temp.y = gy;
-        temp.z = gz;
-
+    VectorFloat temp;
+    if (abs(gx/131.072) > 1.5){
+        temp.x = gx/131.072;
+        temp.y = gy/131.072;
+        temp.z = gz/131.072;
     }
     else{
         temp.x = 0;         //automatically goes down or automatic filtering?
@@ -76,6 +65,19 @@ VectorInt16 IMUManager::getValues()
     }
 
 
+  
+
+//   if (mpu.getIntMotionStatus() == 1){
+//        Serial.println("Motion detected");
+ //   }
+
+//    if (mpu.getIntZeroMotionStatus() == 1){
+//        Serial.println("Zero motion");
+ //   }
+
+    //temp.x = 0;         //automatically goes down or automatic filtering?
+    //temp.y = 0;
+    //temp.z = 0;
     return temp;
 
 }
