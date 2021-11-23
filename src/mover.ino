@@ -49,7 +49,7 @@ void setup()
 
   // Sensor readings with offsets:   8       0       16382   1       0       1
   // Your offsets:   		-286    -315    1693    54      -49     -32
-  imuManager.setup(-285, -315, 1693, 54, -49, -3);
+  imuManager.setup(-285, -315, 1693, 54, -49, -3, DEBUG_LED_PIN);
   values.x = 0;
   values.y = 0;
   values.z = 0;
@@ -87,7 +87,7 @@ void reset()
   Serial.println("Setup IMU");
 #ifdef ENABLE_IMU
   //-192    -294    1666    53      -50     -27
-  imuManager.setup(-192, -294, 1666, 53, -50, -27);
+  imuManager.setup(-192, -294, 1666, 53, -50, -27, DEBUG_LED_PIN);
 #endif
 
   Serial.println("Setup timers");

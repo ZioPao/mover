@@ -11,7 +11,7 @@ void dmpDataReady() {
 // ================================================================
 // ===                         Setup                            ===
 // ================================================================
-void IMUManager::setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z_offset, int16_t gyr_x_offset, int16_t gyr_y_offset, int16_t gyr_z_offset)
+void IMUManager::setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z_offset, int16_t gyr_x_offset, int16_t gyr_y_offset, int16_t gyr_z_offset, int debug_led_pin)
 {
     Wire.begin();
     Serial.begin(9600);
@@ -44,6 +44,8 @@ void IMUManager::setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z
     // Calibration Time: generate offsets and calibrate our MPU6050
     mpu.CalibrateAccel(2);
     mpu.CalibrateGyro(2);
+
+    this -> led_pin = debug_led_pin;
    
 }
 
@@ -53,19 +55,23 @@ VectorFloat IMUManager::getValues()
     int16_t ax, ay, az, gx, gy, gz;
     mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
     VectorFloat temp;
+
     if (abs(gx/131.072) > 1.5){
         temp.x = gx/131.072;
         temp.y = gy/131.072;
         temp.z = gz/131.072;
+        digitalWrite(this -> led_pin, HIGH);
+        
     }
     else{
         temp.x = 0;         //automatically goes down or automatic filtering?
         temp.y = 0;
         temp.z = 0;
+        digitalWrite(this -> led_pin, LOW);
+
     }
-
-
   
+
 
 //   if (mpu.getIntMotionStatus() == 1){
 //        Serial.println("Motion detected");

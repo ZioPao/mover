@@ -27,9 +27,16 @@ private:
     
     void MPULoading();
 
+    // led stuff
+    unsigned int led_pin;
+    unsigned int led_state;
+    unsigned long led_current_time;
+    unsigned long led_previous_time;
+
+
 public:
 
-    void setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z_offset, int16_t gyr_x_offset, int16_t gyr_y_offset, int16_t gyr_z_offset);
+    void setup(int16_t acc_x_offset, int16_t acc_y_offset, int16_t acc_z_offset, int16_t gyr_x_offset, int16_t gyr_y_offset, int16_t gyr_z_offset, int debug_led_pin);
     VectorFloat getValues();
 
     void setDmpReady(bool value);
