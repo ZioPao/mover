@@ -1,0 +1,44 @@
+{
+    "authors": {
+        "name": "Axel Payan",
+        "url": "https://os.mbed.com/users/co838_app56/"
+    },
+    "build": {
+        "builder": "MbedLibBuilder"
+    },
+    "dependencies": [
+        {
+            "authors": "Kevin Anderson",
+            "frameworks": "mbed",
+            "name": "C12832"
+        },
+        {
+            "authors": "Jim Carver",
+            "frameworks": "mbed",
+            "name": "FXOS8700Q"
+        },
+        {
+            "authors": "Chris Styles",
+            "frameworks": "mbed",
+            "name": "LM75B"
+        },
+        {
+            "authors": "Erik -",
+            "frameworks": "mbed",
+            "name": "MMA7660"
+        }
+    ],
+    "description": "IO is an event based input manager which permit to select which composents are manged on your system",
+    "frameworks": "mbed",
+    "keywords": [
+        "application-board",
+        "k64f"
+    ],
+    "name": "IO",
+    "platforms": "*",
+    "repository": {
+        "type": "hg",
+        "url": "https://os.mbed.com/users/co838_app56/code/IO/"
+    },
+    "version": "0.0.0+sha.50e2aefe516b"
+}

@@ -56,7 +56,7 @@ VectorFloat IMUManager::getValues()
     mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
     VectorFloat temp;
 
-    if (abs(gx/131.072) > 1.5){
+    if (abs(gx/131.072) > 3){
         temp.x = gx/131.072;
         temp.y = gy/131.072;
         temp.z = gz/131.072;

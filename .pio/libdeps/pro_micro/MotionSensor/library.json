@@ -1,0 +1,31 @@
+{
+    "authors": {
+        "name": "weeb grammers",
+        "url": "https://os.mbed.com/users/weebgrammers/"
+    },
+    "build": {
+        "builder": "MbedLibBuilder"
+    },
+    "dependencies": [
+        {
+            "authors": "",
+            "frameworks": "mbed",
+            "name": "MotionSensor"
+        }
+    ],
+    "description": "zzz",
+    "examples": [
+        "https://os.mbed.com/users/weebgrammers/code/Assignment2_ver3/",
+        "https://os.mbed.com/users/weebgrammers/code/Assignment2_ver5/",
+        "https://os.mbed.com/users/weebgrammers/code/Assignment2_ver6/"
+    ],
+    "frameworks": "mbed",
+    "keywords": [],
+    "name": "MotionSensor",
+    "platforms": "*",
+    "repository": {
+        "type": "hg",
+        "url": "https://os.mbed.com/users/weebgrammers/code/MotionSensor/"
+    },
+    "version": "0.0.0+sha.cf7bca71c4e3"
+}
